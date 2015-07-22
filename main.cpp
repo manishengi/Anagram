@@ -1,11 +1,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
+#include <utility>
+
 #define ASCII_BASE 65
 using namespace std;
 const int PRIME_FACTORS[26] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101};
 
-multimap<unsigned long long,string> AnagramsMap;
+
+struct keyComparator
+{
+    bool operator () (const unsigned long long first, const unsigned long long second) const
+    {
+        return (first > second);
+    }
+};
+
+multimap<unsigned long long, string, keyComparator> AnagramsMap;
+
+
 
 
 bool checkFileExistence(const string& filename)
@@ -43,13 +57,24 @@ unsigned long long computeHashForEachWord ( string word )
 void hashEachWord( unsigned long long hashkey, string word)
 {
     AnagramsMap.insert(pair<unsigned long long,string> (hashkey,word));
+    cout << " \n the key of the map " << hashkey;
+    cout << "the count pf th ek ey " << AnagramsMap.count (hashkey);
+}
+
+
+void printAnagrams()
+{
+
 
 }
+
+
+
 int main()
 {
     ifstream file;
     string word;
-    getFile("a.txt.txt", file);
+    getFile("scrabble.txt", file);
     if (file.is_open()) {
 
         while (getline (file,word))
@@ -57,8 +82,9 @@ int main()
            // cout << word << "\n";
             unsigned long long hashkey = computeHashForEachWord(word);
             hashEachWord (hashkey, word);
-
         }
     }
+
+    printAnagrams();
 
 }
