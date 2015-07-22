@@ -1,0 +1,12 @@
+A
+B
+C
+D
+AA
+BB
+AB
+CD
+AD
+ZZ
+Z
+M
