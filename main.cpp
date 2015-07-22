@@ -69,10 +69,17 @@ void printAnagrams()
 
 
     for ( multimap<unsigned long long, string, keyComparator>::iterator it = AnagramsMap.begin();
-         it != AnagramsMap.end();
-         ++it)
+         it != AnagramsMap.end();)
     {
         valueIterator = AnagramsMap.equal_range((*it).first);
+
+        int noOfValuesforKey = AnagramsMap.count((*it).first);
+
+        if(noOfValuesforKey == 1)
+        {
+            it++;
+            continue;
+        }
 
         for (multimap<unsigned long long, string>::iterator iterate = valueIterator.first;
                 iterate != valueIterator.second;
@@ -81,6 +88,11 @@ void printAnagrams()
             cout <<  " " << (*iterate).second ;
         }
         cout << endl;
+
+        for(int dummyIncrementor = 0; dummyIncrementor < noOfValuesforKey; dummyIncrementor++)
+        {
+            it++;
+        }
     }
 }
 
