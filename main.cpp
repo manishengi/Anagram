@@ -52,24 +52,35 @@ unsigned long long computeHashForEachWord ( string word )
            primeValueForWord *= getPrimeFactorForCharacter( word[index] );
     }
 
-    cout<< "\n word  "<< word <<" value "<<primeValueForWord  << endl;
+    //cout<< "\n word  "<< word <<" value "<<primeValueForWord  << endl;
     return primeValueForWord;
 }
 void hashEachWord( unsigned long long hashkey, string word)
 {
     AnagramsMap.insert(pair<unsigned long long,string> (hashkey,word));
-    cout << "the count of anagrams is " << AnagramsMap.count (hashkey) << endl;
+    //cout << "the count of anagrams is " << AnagramsMap.count (hashkey) << endl;
 }
 
 
 void printAnagrams()
 {
+
+    pair<multimap<unsigned long long , string>::iterator, multimap<unsigned long long, string>::iterator> valueIterator;
+
+
     for ( multimap<unsigned long long, string, keyComparator>::iterator it = AnagramsMap.begin();
          it != AnagramsMap.end();
          ++it)
     {
-        cout << (*it).first << " ," << (*it).second << "|" <<endl;
+        valueIterator = AnagramsMap.equal_range((*it).first);
 
+        for (multimap<unsigned long long, string>::iterator iterate = valueIterator.first;
+                iterate != valueIterator.second;
+                ++iterate)
+        {
+            cout <<  " " << (*iterate).second ;
+        }
+        cout << endl;
     }
 }
 
@@ -84,9 +95,8 @@ int main()
 
         while (getline (file,word))
         {
-           // cout << word << "\n";
             unsigned long long hashkey = computeHashForEachWord(word);
-            cout << "the hashkey" << hashkey << endl;
+            //cout << "the hashkey" << hashkey << endl;
             hashEachWord (hashkey, word);
         }
     }
