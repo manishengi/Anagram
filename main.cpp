@@ -45,27 +45,32 @@ int getPrimeFactorForCharacter ( char alphabet )
 
 unsigned long long computeHashForEachWord ( string word )
 {
-    unsigned long long primeValueforWord = 1;
+    unsigned long long primeValueForWord = 1;
 
     for (int index = 0; index < word.size(); index++ )
     {
-           primeValueforWord *= getPrimeFactorForCharacter( word[index] );
+           primeValueForWord *= getPrimeFactorForCharacter( word[index] );
     }
 
-    cout<< "\n word  "<< word <<" value "<<primeValueforWord;
+    cout<< "\n word  "<< word <<" value "<<primeValueForWord  << endl;
+    return primeValueForWord;
 }
 void hashEachWord( unsigned long long hashkey, string word)
 {
     AnagramsMap.insert(pair<unsigned long long,string> (hashkey,word));
-    cout << " \n the key of the map " << hashkey;
-    cout << "the count pf th ek ey " << AnagramsMap.count (hashkey);
+    cout << "the count of anagrams is " << AnagramsMap.count (hashkey) << endl;
 }
 
 
 void printAnagrams()
 {
+    for ( multimap<unsigned long long, string, keyComparator>::iterator it = AnagramsMap.begin();
+         it != AnagramsMap.end();
+         ++it)
+    {
+        cout << (*it).first << " ," << (*it).second << "|" <<endl;
 
-
+    }
 }
 
 
@@ -81,6 +86,7 @@ int main()
         {
            // cout << word << "\n";
             unsigned long long hashkey = computeHashForEachWord(word);
+            cout << "the hashkey" << hashkey << endl;
             hashEachWord (hashkey, word);
         }
     }
